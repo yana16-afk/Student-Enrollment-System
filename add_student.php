@@ -1,10 +1,10 @@
 <?php
-require 'includes/db.php';
-include 'includes/header.php';
+require 'db.php';
+include 'header.php';
 
 $errors = [];
 $name = $email = $course_id = "";
-
+$pdo = getConnection();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = htmlspecialchars(trim($_POST['name']));
     $email = filter_var(trim($_POST['email']), FILTER_SANITIZE_EMAIL);
