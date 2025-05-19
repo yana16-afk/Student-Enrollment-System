@@ -10,29 +10,24 @@ function getConnection() {
         // Create connection
         $conn = new PDO("mysql:host=$dbhost;dbname=$dbname", $dbuser, $dbpass);
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        echo "Connected to $dbname at $dbhost successfully.";
         $conn->query("CREATE DATABASE IF NOT EXISTS $dbname");
         return $conn;
     } catch (PDOException $ex) {
         die ("Connection failed: " . $ex->getMessage());
     }
 }
-// Function to setup the database (create tables, insert sample data)
 function setupDatabase() {
      $servername = "localhost";
      $username = "root";
      $password = "";
  
      try {
-         // Connect without specifying DB to create it first
          $pdo = new PDO("mysql:host=$servername;charset=utf8mb4", $username, $password);
          $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
  
-         // Create the database if not exists
          $pdo->exec("CREATE DATABASE IF NOT EXISTS student_enrollment");
          $pdo->exec("USE student_enrollment");
  
-         // SQL commands for tables and sample data
          $sql = "
              DROP TABLE IF EXISTS students;
              DROP TABLE IF EXISTS courses;
@@ -82,8 +77,7 @@ function setupDatabase() {
                  ('09013', 'Francisco Balagtas', 'francisco.balagtas@example.com', 'COMP015'),
                  ('09014', 'Leona Florentino', 'leona.florentino@example.com', 'COMP016');
          ";
- 
-         // Execute each statement separately
+         
          foreach (explode(";", $sql) as $statement) {
              if (trim($statement) !== '') {
                  $pdo->exec($statement);
