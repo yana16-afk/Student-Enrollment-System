@@ -1,7 +1,9 @@
 <?php 
-require_once 'db_connection.php';
+require_once 'db.php';
 include 'header.php';
 include 'footer.php';
+
+setupDatabase();
 
 $stmt = $pdo->query("
     SELECT students.id, students.name, students.email, courses.course_name FROM students
