@@ -5,8 +5,10 @@ include 'footer.php';
 
 $pdo = getConnection();
 $stmt = $pdo->query("
-    SELECT students.id, students.name, students.email, courses.course_name FROM students
-    LEFT JOIN courses ON students.course_id = courses.id
+    SELECT s.id, s.name, s.email, c.course_name 
+    FROM students s
+    LEFT JOIN student_courses sc ON s.id = sc.student_id
+    LEFT JOIN courses c ON sc.course_id = c.id
 ");
 $students = $stmt->fetchAll();
 ?>
