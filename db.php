@@ -4,8 +4,8 @@ function getConnection()
 {
     $dbhost = 'localhost';
     $dbuser = 'root';
-    //$dbpass = 'root'; // ← Corrected for MAMP (need to be changed for XAMPP; need ng password for MacOS)
-    $dbpass = ''; // ← Uncomment this line for XAMPP
+    $dbpass = 'root'; // ← Corrected for MAMP (need to be changed for XAMPP; need ng password for MacOS)
+    // $dbpass = ''; // ← Uncomment this line for XAMPP
     $dbname = 'student_enrollment';
 
     try {
@@ -22,8 +22,8 @@ function setupDatabase()
 {
     $servername = "localhost";
     $username = "root";
-    //$password = "root";    // ← Corrected for MAMP (need to be changed for XAMPP; need ng password for MacOS)
-    $password = '';
+    $password = "root";    // ← Corrected for MAMP (need to be changed for XAMPP; need ng password for MacOS)
+    //$password = '';
     
     try {
         $pdo = new PDO("mysql:host=$servername;charset=utf8mb4", $username, $password);
