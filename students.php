@@ -77,12 +77,17 @@ try {
                             <td><?= htmlspecialchars($student['name']) ?></td>
                             <td><?= htmlspecialchars($student['email']) ?></td>
                             <td><?= htmlspecialchars($studentCourses[$student['id']] ?? 'Not enrolled') ?></td>
+
                             <td>
+                            <div class="d-flex gap-2">
+                                <a href="edit_student.php?id=<?= htmlspecialchars($student['id']) ?>" class="btn btn-sm btn-warning">Edit</a>
                                 <form action="students.php" method="POST" onsubmit="return confirm('Are you sure you want to delete this student?');">
-                                    <input type="hidden" name="id" value="<?= htmlspecialchars($student['id']) ?>">
-                                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                <input type="hidden" name="id" value="<?= htmlspecialchars($student['id']) ?>">
+                                <button type="submit" class="btn btn-sm btn-danger">Delete</button>
                                 </form>
+                            </div>
                             </td>
+
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
