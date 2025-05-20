@@ -1,46 +1,49 @@
 <?php
 
-function getConnection() {
+function getConnection()
+{
     $dbhost = 'localhost';
     $dbuser = 'root';
-    $dbpass = '';
+    $dbpass = 'root'; // ← Corrected for MAMP (need to be changed for XAMPP; need ng password for MacOS)
+    // $dbpass = ''; // ← Uncomment this line for XAMPP
     $dbname = 'student_enrollment';
 
-    try{
+    try {
         // Create connection
         $conn = new PDO("mysql:host=$dbhost;dbname=$dbname", $dbuser, $dbpass);
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $conn->query("CREATE DATABASE IF NOT EXISTS $dbname");
         return $conn;
     } catch (PDOException $ex) {
-        die ("Connection failed: " . $ex->getMessage());
+        die("Connection failed: " . $ex->getMessage());
     }
 }
-function setupDatabase() {
-     $servername = "localhost";
-     $username = "root";
-     $password = "";
- 
-     try {
-         $pdo = new PDO("mysql:host=$servername;charset=utf8mb4", $username, $password);
-         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
- 
-         $pdo->exec("CREATE DATABASE IF NOT EXISTS student_enrollment");
-         $pdo->exec("USE student_enrollment");
- 
-         $sql = "
+function setupDatabase()
+{
+    $servername = "localhost";
+    $username = "root";
+    $password = "root";    // ← Corrected for MAMP (need to be changed for XAMPP; need ng password for MacOS)
+
+    try {
+        $pdo = new PDO("mysql:host=$servername;charset=utf8mb4", $username, $password);
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        $pdo->exec("CREATE DATABASE IF NOT EXISTS student_enrollment");
+        $pdo->exec("USE student_enrollment");
+
+        $sql = "
              DROP TABLE IF EXISTS students;
              DROP TABLE IF EXISTS courses;
  
              CREATE TABLE courses (
                  id VARCHAR(8) PRIMARY KEY,
-                 course_name VARCHAR(30) NOT NULL
+                 course_name VARCHAR(60) NOT NULL  
              );
  
              CREATE TABLE students (
                  id VARCHAR(11) PRIMARY KEY,
                  name VARCHAR(40) NOT NULL,
-                 email VARCHAR(25) NOT NULL,
+                 email VARCHAR(30) NOT NULL,
                  course_id VARCHAR(8),
                  FOREIGN KEY (course_id) REFERENCES courses(id)
              );
@@ -77,16 +80,16 @@ function setupDatabase() {
                  ('09013', 'Francisco Balagtas', 'francisco.balagtas@example.com', 'COMP015'),
                  ('09014', 'Leona Florentino', 'leona.florentino@example.com', 'COMP016');
          ";
-         
-         foreach (explode(";", $sql) as $statement) {
-             if (trim($statement) !== '') {
-                 $pdo->exec($statement);
-             }
-         }
- 
-         echo "Database and tables created successfully, sample data inserted.<br>";
-     } catch (PDOException $e) {
-         die("Error setting up database: " . $e->getMessage());
-     }
- }
- ?>
+
+        foreach (explode(";", $sql) as $statement) {
+            if (trim($statement) !== '') {
+                $pdo->exec($statement);
+            }
+        }
+
+        echo "Database and tables created successfully, sample data inserted.<br>";
+    } catch (PDOException $e) {
+        die("Error setting up database: " . $e->getMessage());
+    }
+}
+?>
